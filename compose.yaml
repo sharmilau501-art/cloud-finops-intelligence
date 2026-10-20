@@ -1,0 +1,24 @@
+# Local demonstration only; not a hardened production Airflow deployment.
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    image: cloud-finops-airflow:phase5
+    command: standalone
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      AIRFLOW_HOME: /opt/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+      AIRFLOW__SCHEDULER__CATCHUP_BY_DEFAULT: "false"
+      FINOPS_ROOT: /opt/finops
+      PYTHONPATH: /opt/finops/src
+    volumes:
+      - ./:/opt/finops
+      - airflow_state:/opt/airflow
+      - ./dags:/opt/airflow/dags:ro
+    restart: unless-stopped
+volumes:
+  airflow_state:

@@ -16,3 +16,9 @@ target/
 logs/
 dbt_packages/
 .user.yml
+# Phase 5 local Docker and Airflow artifacts
+reports/
+airflow_logs/
+airflow_data/
+.airflow/
+logs/
