@@ -28,3 +28,23 @@ Generated inputs appear in `data/raw/`.
 - `k8s_metrics.csv`: one daily snapshot per application except shared (90 rows). Simulated CPU/memory utilization.
 - `product_usage.csv`: one daily application summary (90 rows). Simulated request counts and active users.
 - Currency is simulated USD; the shared resource is intentionally unallocated for a later exercise. All numbers are fictitious. No actual AWS costs or services are incurred by this phase.
+
+## Phase 2: Validate, ingest into DuckDB, and reconcile
+
+Continue in the same Git repository, with the activated virtual environment.
+
+```bash
+python -m pip install -r requirements.txt -e .
+python -m finops.generate_data --days 30 --seed 42
+python -m finops.ingest --raw-dir data/raw --db data/warehouse/finops.duckdb
+python -m finops.report --db data/warehouse/finops.duckdb
+python -m pytest -q
+```
+
+**Expected clean sample:** 120 billing rows, 90 telemetry rows, 90 product-use rows; no quarantined records; billing reconciliation PASS.
+
+Warehouse data is stored in `data/warehouse/finops.duckdb`, which is ignored by Git. `ingestion_quarantine` holds invalid rows from the latest successful run, with error explanations. `ingestion_audit` retains a per-dataset history for every successful run. Rerunning ingestion replaces active data rather than duplicating it.
+
+The billing reconciliation compares parseable source amounts against accepted and quarantined amounts, and accepted amounts against what DuckDB actually stored. If cost itself cannot be parsed, reconciliation is marked **partial / review**, not PASS.
+
+See [Phase 2 architecture and quality rules](docs/phase2-ingestion.md). All inputs and costs are synthetic. No cloud charges or credentials are needed.

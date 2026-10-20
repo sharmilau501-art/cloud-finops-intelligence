@@ -6,4 +6,9 @@ src/cloud_finops_intelligence.egg-info/dependency_links.txt
 src/cloud_finops_intelligence.egg-info/top_level.txt
 src/finops/__init__.py
 src/finops/generate_data.py
+src/finops/ingest.py
+src/finops/report.py
+src/finops/validation.py
 tests/test_generate_data.py
+tests/test_ingest.py
+tests/test_validation.py

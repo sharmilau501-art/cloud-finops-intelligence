@@ -6,3 +6,7 @@ __pycache__/
 *.duckdb
 *.db
 .DS_Store
+.venv-*/
+*.egg-info/
+data/warehouse/
+data/reports/
