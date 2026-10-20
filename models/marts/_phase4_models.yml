@@ -1,0 +1,35 @@
+version: 2
+models:
+  - name: fct_shared_cost_allocation_daily
+    description: "Daily fully loaded costs. Shared platform charges are allocated to product applications by request share, rounded by largest-remainder cents."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests: [not_null]
+      - name: direct_cost_usd
+        data_tests: [not_null]
+      - name: allocated_shared_cost_usd
+        data_tests: [not_null]
+      - name: fully_loaded_cost_usd
+        data_tests: [not_null]
+      - name: allocation_method
+        data_tests: [not_null]
+  - name: mart_k8s_efficiency_daily
+    description: "Daily snapshots flag application resource requests for review when both sample CPU and memory utilizations fall below illustrative thresholds."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests: [not_null]
+      - name: low_utilization_review_flag
+        data_tests: [not_null]
+  - name: mart_cost_anomalies_daily
+    description: "Application daily full costs compared with the preceding seven observed days; flags are investigative signals, not confirmed incidents."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests: [not_null]
+      - name: cost_anomaly_flag
+        data_tests: [not_null]

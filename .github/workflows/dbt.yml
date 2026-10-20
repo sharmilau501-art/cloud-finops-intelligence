@@ -16,7 +16,11 @@ jobs:
         run: |
           python -m finops.generate_data --days 30 --seed 42
           python -m finops.ingest --raw-dir data/raw --db data/warehouse/finops.duckdb
+      - name: Run Python tests
+        run: python -m pytest -q
       - name: Build and test dbt models
         run: dbt build --profiles-dir .
-      - name: Check analytics mart billing reconciliation
+      - name: Check direct cost reconciliation
         run: python -m finops.analytics_report
+      - name: Check shared cost allocation and optimization metrics
+        run: python -m finops.phase4_report
