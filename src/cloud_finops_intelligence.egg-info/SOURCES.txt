@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/cloud_finops_intelligence.egg-info/PKG-INFO
+src/cloud_finops_intelligence.egg-info/SOURCES.txt
+src/cloud_finops_intelligence.egg-info/dependency_links.txt
+src/cloud_finops_intelligence.egg-info/top_level.txt
+src/finops/__init__.py
+src/finops/generate_data.py
+tests/test_generate_data.py
