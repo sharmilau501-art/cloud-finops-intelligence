@@ -1,0 +1,10 @@
+# Local-first profile, no passwords or cloud account required.
+# Run dbt from the repository root and pass --profiles-dir .
+finops:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: data/warehouse/finops.duckdb
+      schema: analytics
+      threads: 2

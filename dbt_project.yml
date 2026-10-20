@@ -1,0 +1,16 @@
+name: cloud_finops
+version: '1.0.0'
+config-version: 2
+profile: finops
+
+model-paths: ["models"]
+test-paths: ["dbt_tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  cloud_finops:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

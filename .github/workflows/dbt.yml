@@ -1,0 +1,22 @@
+name: dbt Warehouse Models
+on:
+  push:
+  pull_request:
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Python + dbt dependencies
+        run: python -m pip install -r requirements.txt -r requirements-phase3.txt -e .
+      - name: Generate sample input and ingest
+        run: |
+          python -m finops.generate_data --days 30 --seed 42
+          python -m finops.ingest --raw-dir data/raw --db data/warehouse/finops.duckdb
+      - name: Build and test dbt models
+        run: dbt build --profiles-dir .
+      - name: Check analytics mart billing reconciliation
+        run: python -m finops.analytics_report

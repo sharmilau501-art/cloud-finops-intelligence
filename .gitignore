@@ -10,3 +10,8 @@ __pycache__/
 *.egg-info/
 data/warehouse/
 data/reports/
+# Add these patterns to your existing .gitignore (do NOT replace it).
+*.egg-info/
+target/
+logs/
+dbt_packages/

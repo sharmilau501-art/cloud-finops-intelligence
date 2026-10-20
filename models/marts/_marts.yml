@@ -1,0 +1,68 @@
+version: 2
+models:
+  - name: dim_application
+    description: "Application dimension; the shared platform is deliberately identifiable."
+    columns:
+      - name: application
+        data_tests: [not_null, unique]
+      - name: owning_team
+        data_tests: [not_null]
+  - name: dim_date
+    description: "Calendar attributes for dates observed in at least one input."
+    columns:
+      - name: usage_date
+        data_tests: [not_null, unique]
+  - name: fct_billing_daily
+    description: "Daily application billing BEFORE any shared cost allocation."
+    columns:
+      - name: usage_date
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: usage_date
+      - name: application
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_application')
+                field: application
+      - name: billed_cost_usd
+        data_tests: [not_null]
+  - name: fct_k8s_daily
+    description: "Daily application sample-averaged K8s resource measurements."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_application')
+                field: application
+  - name: fct_product_usage_daily
+    description: "Daily application product request volumes and simulated active users."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_application')
+                field: application
+      - name: product_requests
+        data_tests: [not_null]
+  - name: mart_unit_economics_daily
+    description: "Direct-only cost per 1,000 requests. Shared costs are excluded pending Phase 4."
+    columns:
+      - name: usage_date
+        data_tests: [not_null]
+      - name: application
+        data_tests: [not_null]
+      - name: direct_cost_usd
+        data_tests: [not_null]

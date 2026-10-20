@@ -1,0 +1,3 @@
+# Add-on dependencies for Phase 3. Install after requirements.txt.
+# dbt-duckdb provides both dbt-core and the DuckDB adapter.
+dbt-duckdb>=1.9,<2.0
