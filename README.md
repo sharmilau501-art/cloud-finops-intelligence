@@ -113,6 +113,10 @@ The platform supports two analytical environments.
 
 Synthetic Data Generation → Python Validation & Ingestion → DuckDB RAW Tables → dbt Transformations & Tests → FinOps Analytical Models → Power BI CSV Exports → Dashboards & Forecasting
 
+### Detailed System Architecture
+
+See the [System Architecture and Data Flow](docs/architecture.md) for the end-to-end pipeline diagram, architecture components, and reconciliation methodology.
+
 **Cloud analytical pipeline**
 
 Synthetic Source CSVs → Python Snowflake Loader → Snowflake RAW Schema → dbt Snowflake Models & Tests → Snowflake ANALYTICS Schema → Financial Reconciliation
