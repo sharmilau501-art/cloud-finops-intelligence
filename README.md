@@ -48,3 +48,23 @@ Warehouse data is stored in `data/warehouse/finops.duckdb`, which is ignored by 
 The billing reconciliation compares parseable source amounts against accepted and quarantined amounts, and accepted amounts against what DuckDB actually stored. If cost itself cannot be parsed, reconciliation is marked **partial / review**, not PASS.
 
 See [Phase 2 architecture and quality rules](docs/phase2-ingestion.md). All inputs and costs are synthetic. No cloud charges or credentials are needed.
+
+## Power BI Dashboards & Cost Forecasting
+
+Business objective: Analyze cloud infrastructure costs, shared-cost allocation, application unit economics, Kubernetes utilization, and short-term spending trends.
+
+
+
+Reporting: Four Power BI dashboard pages using reproducible synthetic data.
+
+
+
+Forecasting: Seven-day trailing-average baseline with rolling-origin backtesting.
+
+
+
+Evaluation: MAE and WAPE compared against a last-observation naive forecast. Record the actual results from forecast_backtest.csv, including applications where naive performed better.
+
+
+
+Limitations: Only 30 days of synthetic historical data; review flags and forecasts do not establish real production savings or calibrated uncertainty.

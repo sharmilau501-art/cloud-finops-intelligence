@@ -1,0 +1,5 @@
+application,owning_team,is_shared_platform
+catalog,commerce,false
+checkout,commerce,false
+shared,platform,true
+streaming,media,false

@@ -1,0 +1,28 @@
+-- Copy each measure individually into Power BI Desktop (Modeling > New measure).
+-- Create the relationships described in docs/phase6-powerbi.md first.
+-- Values refer to simulated data and illustrate a FinOps reporting design.
+
+Total Fully Allocated Cost USD = SUM(fact_cost_daily[fully_loaded_cost_usd])
+
+Direct Infrastructure Cost USD = SUM(fact_cost_daily[direct_cost_usd])
+
+Shared Allocated Cost USD = SUM(fact_cost_daily[allocated_shared_cost_usd])
+
+Total Product Requests = SUM(fact_cost_daily[product_requests])
+
+Fully Loaded Cost per 1K Requests USD =
+    DIVIDE([Total Fully Allocated Cost USD] * 1000, [Total Product Requests])
+
+Shared Cost Percentage =
+    DIVIDE([Shared Allocated Cost USD], [Total Fully Allocated Cost USD])
+
+Flagged K8s Samples =
+    CALCULATE(COUNTROWS(fact_k8s_daily), fact_k8s_daily[low_utilization_review_flag] = TRUE())
+
+Flagged Cost Days =
+    CALCULATE(COUNTROWS(fact_anomalies_daily), fact_anomalies_daily[cost_anomaly_flag] = TRUE())
+
+Future 7 Day Forecast USD = SUM(fact_forecast_daily[predicted_cost_usd])
+
+Daily Average Allocated Cost USD =
+    DIVIDE([Total Fully Allocated Cost USD], DISTINCTCOUNT(fact_cost_daily[usage_date]))

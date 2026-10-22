@@ -1,0 +1,3 @@
+# Phase 6: generated temporary files (small synthetic dashboard exports may be committed)
+*.pbix.tmp
+*.pbit.tmp

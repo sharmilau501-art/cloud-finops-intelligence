@@ -1,0 +1,4 @@
+application,validation_days,mae_usd,wape_pct,naive_mae_usd,naive_wape_pct
+catalog,7,4.06,9.61,4.86,11.49
+checkout,7,7.06,9.53,10.45,14.11
+streaming,7,2.69,8.33,3.79,11.72
