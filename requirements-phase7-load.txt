@@ -1,0 +1,3 @@
+# Snowflake 4.x for compatibility with dbt/Snowflake ecosystem libraries.
+# Supports Windows CPython 3.14 (4.4.0+).
+snowflake-connector-python>=4.4,<5

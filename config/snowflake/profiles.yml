@@ -1,0 +1,16 @@
+# Separate Snowflake dbt profile. Do not insert a password here.
+# Run with: dbt debug --profiles-dir config/snowflake --target snowflake
+finops:
+  target: snowflake
+  outputs:
+    snowflake:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_PASSWORD') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE', 'SYSADMIN') }}"
+      warehouse: FINOPS_WH
+      database: FINOPS_DB
+      schema: ANALYTICS
+      threads: 2
+      query_tag: cloud_finops_portfolio_dbt_snowflake
