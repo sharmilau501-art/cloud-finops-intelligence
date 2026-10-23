@@ -1,14 +1,69 @@
-name: Tests
+name: FinOps CI and Data Quality
+
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+
 jobs:
-  test:
+  test-and-validate:
+    name: Python, PySpark, and reconciliation checks
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SPARK_LOCAL_IP: 127.0.0.1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17 for Spark
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install -r requirements.txt -e .
-      - run: python -m pytest -q
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-spark.txt
+
+      - name: Install Python and Spark dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt -r requirements-spark.txt -e .
+
+      - name: Confirm PySpark is available (never silently skip Spark tests)
+        run: python -c "import pyspark; print('PySpark:', pyspark.__version__)"
+
+      - name: Run all unit and integration tests
+        run: python -m pytest tests/ -q
+
+      - name: Generate deterministic synthetic source data
+        run: python -m finops.generate_data --days 30 --seed 42
+
+      - name: Run complete PySpark pipeline
+        run: python -m finops.spark_transform --raw-dir data/raw --out-dir data/spark
+
+      - name: Apply data quality and reconciliation gate
+        run: |
+          python -m finops.quality_gate \
+            --report data/spark/quality_metrics.json \
+            --summary data/spark/quality_gate_summary.json
+
+      - name: Upload data quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: finops-quality-reports
+          path: |
+            data/spark/quality_metrics.json
+            data/spark/quality_gate_summary.json
+          if-no-files-found: warn
+          retention-days: 7
