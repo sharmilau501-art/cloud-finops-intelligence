@@ -1,0 +1,14 @@
+# Optional local-only overlay: grant Airflow read-only access to your existing ADC.
+# Only use this for a development machine and a project you control.
+# Start with: docker compose -f compose.yaml -f compose.bigquery.yaml up -d --build
+services:
+  airflow:
+    environment:
+      FINOPS_BQ_PROJECT: ${FINOPS_BQ_PROJECT:-finops-cloud-intelligence-2026}
+      FINOPS_BQ_DATASET: ${FINOPS_BQ_DATASET:-finops_demo}
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/finops_secrets/google_adc.json
+    volumes:
+      - type: bind
+        source: ${HOME}/.config/gcloud/application_default_credentials.json
+        target: /opt/finops_secrets/google_adc.json
+        read_only: true

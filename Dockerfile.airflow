@@ -1,9 +1,14 @@
-# Isolated Docker development runtime: Airflow 3 and FinOps tools use separate environments.
-# Pin the Airflow image for reproducible local builds.
+# Airflow 3 + isolated FinOps Python runtime. Preserve the existing DAG.
 FROM apache/airflow:3.1.7-python3.12
 USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openjdk-17-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 RUN python -m venv /opt/finops_venv \
     && /opt/finops_venv/bin/python -m pip install --no-cache-dir --upgrade pip \
     && /opt/finops_venv/bin/python -m pip install --no-cache-dir \
-       'pandas>=2.2,<3.0' 'duckdb>=1.1,<2.0' 'dbt-duckdb>=1.9,<2.0'
+       'pandas>=2.2,<3.0' 'duckdb>=1.1,<2.0' 'dbt-duckdb>=1.9,<2.0' \
+       'pyspark==4.2.0' 'google-cloud-bigquery==3.46.2'
 USER airflow
