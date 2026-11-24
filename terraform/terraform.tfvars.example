@@ -1,0 +1,4 @@
+project_id            = "your-gcp-project-id"
+dataset_id            = "finops_demo"
+location              = "US"
+default_expiration_ms = 5184000000

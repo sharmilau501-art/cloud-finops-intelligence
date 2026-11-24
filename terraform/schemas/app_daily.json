@@ -1,0 +1,47 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "usage_date",
+    "type": "DATE"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "application",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "team",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "billed_cost_usd",
+    "type": "NUMERIC"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "product_requests",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "active_users",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "cpu_utilization_pct",
+    "type": "FLOAT"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "memory_utilization_pct",
+    "type": "FLOAT"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "cost_per_1000_requests_usd",
+    "type": "NUMERIC"
+  }
+]

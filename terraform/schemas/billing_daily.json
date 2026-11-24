@@ -1,0 +1,22 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "usage_date",
+    "type": "DATE"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "application",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "team",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "billed_cost_usd",
+    "type": "NUMERIC"
+  }
+]
