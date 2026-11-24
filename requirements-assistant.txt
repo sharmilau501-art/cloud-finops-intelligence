@@ -1,0 +1,7 @@
+# Install separately from the Spark/Docker dependency set.
+google-cloud-bigquery>=3.20,<4
+google-genai>=1.0,<3
+fastapi>=0.110,<1
+uvicorn>=0.25,<1
+pytest>=8,<10
+httpx>=0.27,<1

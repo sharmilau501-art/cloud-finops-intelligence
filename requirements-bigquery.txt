@@ -1,0 +1,2 @@
+# Add to existing requirements.txt and requirements-spark.txt only in WSL.
+google-cloud-bigquery>=3.25,<4
